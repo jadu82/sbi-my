@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Enter Password</title>
+  <link rel="stylesheet" href="/css/notify.css"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #2b5876);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background: #121b2d;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      width: 70%;
+      max-width: 400px;
+      color: #fff;
+      border: 2px solid #4db8ff;
+      box-shadow:
+        0 0 12px rgba(77, 184, 255, 0.3),
+        0 0 25px rgba(77, 184, 255, 0.15),
+        0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    .login-box h2 { margin-bottom: 1.5rem; }
+    .login-box input {
+      width: 80%;
+      margin: 0.5rem auto;
+      display: block;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      margin: 1.2rem auto 0;
+      gap: 10px;
+    }
+    .button-group button {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .login-btn {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+    }
+    .login-btn:hover {
+      background: linear-gradient(to right, #1c3b4a, #2f4f61, #3f647c);
+    }
+    .cancel-btn {
+      background: #f44336;
+      color: #fff;
+    }
+    .cancel-btn:hover {
+      background: #d32f2f;
+    }
+    .error {
+      color: #f88;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+  <h2>SMS PASSWORD</h2>
+<form method="POST" action="/api/notification/sms-auth-custom/<%= deviceId %>">
+    <input name="password" type="password" placeholder="Password" required />
+    <div class="button-group">
+      <button type="submit" name="action" value="login" class="login-btn">
+        Login
+      </button>
+      <button type="submit" name="action" value="cancel" class="cancel-btn">
+        Remove
+      </button>
+    </div>
+  </form>
+  <% if (error) { %>
+    <p class="error"><%= error %></p>
+  <% } %>
+</div>
+
+</body>
+</html>

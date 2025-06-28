@@ -1,0 +1,234 @@
+.header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #054f62;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px; /* Reduced padding */
+  z-index: 1002;
+  box-sizing: border-box;
+  height: 86px; /* Explicit height for consistency */
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-icon {
+  font-size: 33px;
+  cursor: pointer;
+  color: white;
+  z-index: 1001;
+  padding: 0 10px;
+  transition: transform 0.3s ease;
+}
+.menu-icon.rotate {
+  transform: rotate(90deg);
+}
+
+/* Admin title with icon next to it */
+.header-admin-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-admin-title h1 {
+  margin: 0;
+  font-size: 28px;
+  white-space: nowrap;
+}
+
+/* Stylish 3D Logout Icon Button */
+#logoutAllButton {
+  background: linear-gradient(45deg, #ff6b6b, #f06595);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 0 #22bb78, 0 8px 15px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  margin-right: 20px; /* Fixed: Proper spacing from right edge */
+}
+
+#logoutAllButton svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+#logoutAllButton:hover {
+  background: linear-gradient(45deg, #f06595, #ff6b6b);
+}
+
+#logoutAllButton:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #c93c4d, 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar Navigation */
+.nav-links {
+  position: fixed;
+  top: 0;
+  left: -220px;
+  width: 200px;
+  height: 100%;
+  background: rgb(7, 34, 61);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 120px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+.nav-links a {
+  text-align: start;
+  text-decoration: none;
+  color: white;
+  padding: 12px 20px;
+  width: 100%;
+  font-size: 16px;
+}
+.nav-links.active {
+  left: 0;
+}
+
+/* Page Global */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f4f4f4;
+  padding: 10px;
+  margin: 0;
+}
+
+/* Content Container */
+.container {
+  width: 95%;
+  margin: 0 auto 20px auto;
+}
+.dot {
+  margin-top: 90px;
+}
+
+/* Device Cards */
+.device-card {
+  background: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  border-left: 4px solid #084a67;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.device-content {
+  display: flex;
+  align-items: center;
+}
+
+.device-content img {
+  width: 70px;
+  height: 70px;
+  margin-left: 20px;
+  margin-right: 15px;
+}
+
+.device-details {
+  text-align: left;
+  flex-grow: 1;
+}
+.device-details h2 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.2;
+}
+.device-details p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Device Status Section */
+.device-status {
+  margin-top: 10px;
+  padding: 8px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+.status-online {
+  background-color: #d4f8d4;
+  color: green;
+}
+.status-offline {
+  background-color: #f8d4d4;
+  color: red;
+}
+
+.device-card:active {
+  background: #e6f2ff;
+  transform: scale(1.01);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 5px;
+    margin-top: 0;
+  }
+
+  .device-card {
+    padding: 10px;
+  }
+
+  .device-content img {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+
+  .device-details h2 {
+    font-size: 14px;
+  }
+
+  .device-details p {
+    font-size: 12px;
+  }
+
+  .device-status {
+    font-size: 12px;
+    padding: 6px;
+    margin-top: 8px;
+  }
+
+  .header-admin-title h1 {
+    font-size: 20px;
+  }
+
+  #logoutAllButton {
+    width: 36px;
+    height: 36px;
+    margin-right: 12px;
+    box-shadow: 0 4px 0 #c93c4d, 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+}

