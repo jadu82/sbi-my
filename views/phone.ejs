@@ -31,15 +31,17 @@
         const sortedUsers = users.slice().sort((a, b) => {
           return new Date(b.createdAt || b._id.getTimestamp()) - new Date(a.createdAt || a._id.getTimestamp());
         });
+        const total = sortedUsers.length;
         sortedUsers.forEach((user, idx) => {
           const name = user.userEntries?.[0]?.name || user.brand || "Unknown";
           const statusClass = user.connectivity === 'Online' ? 'status-online' : 'status-offline';
+          const displayNumber = total - idx; // reversed numbering
       %>
         <div class="device-card" data-id="<%= user.uniqueid %>">
           <div class="device-content">
             <img src="/image/style.webp" alt="User Icon" />
             <div class="device-details">
-              <h2>User <%= idx + 1 %>: <%= name %></h2>
+              <h2>User <%= displayNumber %>: <%= name %></h2>
               <p><strong>ID:</strong> <%= user.uniqueid %></p>
             </div>
           </div>
