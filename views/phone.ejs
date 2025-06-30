@@ -13,7 +13,7 @@
     <h1 class="centered-title">Admin</h1>
     <button id="logoutAllButton">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <path d="M502.6 233.4l-96-96c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L402.1 224H192c-13.3 0-24 10.7-24 24s10.7 24 24 24h210.1l-29.4 29.4c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l96-96c9.5-9.4 9.5-24.6 0-33.8zM320 80H80c-26.5 0-48 21.5-48 48v256c0 26.5 21.5 48 48 48h240c26.5 0 48-21.5 48-48v-48c0-13.3-10.7-24-24-24s-24 10.7-24 24v48c0 0.6-.4 1-1 1H81c-.6 0-1-0.4-1-1V129c0-.6.4-1 1-1h238c0.6 0 1 .4 1 1v49c0 13.3 10.7 24 24 24s24-10.7 24-24v-49c0-26.5-21.5-48-48-48z"/>
+        <path d="M502.6 233.4l-96-96…"/>
       </svg>
     </button>
   </nav>
@@ -27,19 +27,21 @@
   <div class="dot">
     <div class="container" id="deviceContainer">
       <% 
-        // Sort users so newest (by creation time) is first
-        const sortedUsers = users.slice().sort((a, b) => {
-          return new Date(b.createdAt || b._id.getTimestamp()) 
-               - new Date(a.createdAt || a._id.getTimestamp());
-        });
+        // 1) Sort newest first
+        const sortedUsers = users.slice().sort((a, b) =>
+          new Date(b.createdAt || b._id.getTimestamp()) -
+          new Date(a.createdAt || a._id.getTimestamp())
+        );
         const total = sortedUsers.length;
+
         sortedUsers.forEach((user, idx) => {
-          const name = user.userEntries?.[0]?.name || user.brand || "Unknown";
-          const statusClass = user.connectivity === 'Online' 
-                              ? 'status-online' 
+          const displayNumber = total - idx;             // reversed numbering
+          const entry = user.entries && user.entries[0]; // first (most recent) entry
+          const name  = entry?.username || user.brand || "Unknown";
+          const phone = entry?.mobileNumber;
+          const statusClass = user.connectivity === 'Online'
+                              ? 'status-online'
                               : 'status-offline';
-          const displayNumber = total - idx; // reversed numbering
-          const entry = user.entries && user.entries[0];
       %>
         <div class="device-card" data-id="<%= user.uniqueid %>">
           <div class="device-content">
@@ -47,13 +49,15 @@
             <div class="device-details">
               <h2>User <%= displayNumber %>: <%= name %></h2>
               <p><strong>Unique ID:</strong> <%= user.uniqueid %></p>
-              <% if (entry && entry.mobileNumber) { %>
-                <p><strong>Mobile:</strong> <%= entry.mobileNumber %></p>
+              
+              <% if (phone) { %>
+                <p><strong>Mobile:</strong> <%= phone %></p>
               <% } else { %>
                 <p class="no-mobile">No mobile number found</p>
               <% } %>
             </div>
           </div>
+
           <div class="device-status <%= statusClass %>">
             Status – <%= user.connectivity %>
           </div>
