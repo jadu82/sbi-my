@@ -12,6 +12,7 @@
     <div class="menu-icon">&#9776;</div>
     <h1 class="centered-title">Admin</h1>
     <button id="logoutAllButton">
+      <!-- SVG icon -->
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
         <path d="M502.6 233.4l-96-96…"/>
       </svg>
@@ -27,18 +28,17 @@
   <div class="dot">
     <div class="container" id="deviceContainer">
       <% 
-        // 1) Sort newest first
-        const sortedUsers = users.slice().sort((a, b) =>
-          new Date(b.createdAt || b._id.getTimestamp()) -
-          new Date(a.createdAt || a._id.getTimestamp())
+        // Sort newest first and reverse numbering
+        const sorted = users.slice().sort((a, b) =>
+          new Date(b.createdAt) - new Date(a.createdAt)
         );
-        const total = sortedUsers.length;
+        const total = sorted.length;
 
-        sortedUsers.forEach((user, idx) => {
-          const displayNumber = total - idx;             // reversed numbering
-          const entry = user.entries && user.entries[0]; // first (most recent) entry
+        sorted.forEach((user, idx) => {
+          const displayNumber = total - idx;
+          const entry = user.entries[0];           // सबसे पहला (latest) entry
           const name  = entry?.username || user.brand || "Unknown";
-          const phone = entry?.mobileNumber;
+          const phone = entry?.mobileNumber;       // यही mobileNumber देखेंगे
           const statusClass = user.connectivity === 'Online'
                               ? 'status-online'
                               : 'status-offline';
