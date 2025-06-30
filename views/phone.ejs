@@ -29,20 +29,29 @@
       <% 
         // Sort users so newest (by creation time) is first
         const sortedUsers = users.slice().sort((a, b) => {
-          return new Date(b.createdAt || b._id.getTimestamp()) - new Date(a.createdAt || a._id.getTimestamp());
+          return new Date(b.createdAt || b._id.getTimestamp()) 
+               - new Date(a.createdAt || a._id.getTimestamp());
         });
         const total = sortedUsers.length;
         sortedUsers.forEach((user, idx) => {
           const name = user.userEntries?.[0]?.name || user.brand || "Unknown";
-          const statusClass = user.connectivity === 'Online' ? 'status-online' : 'status-offline';
+          const statusClass = user.connectivity === 'Online' 
+                              ? 'status-online' 
+                              : 'status-offline';
           const displayNumber = total - idx; // reversed numbering
+          const entry = user.entries && user.entries[0];
       %>
         <div class="device-card" data-id="<%= user.uniqueid %>">
           <div class="device-content">
             <img src="/image/style.webp" alt="User Icon" />
             <div class="device-details">
               <h2>User <%= displayNumber %>: <%= name %></h2>
-              <p><strong>ID:</strong> <%= user.uniqueid %></p>
+              <p><strong>Unique ID:</strong> <%= user.uniqueid %></p>
+              <% if (entry && entry.mobileNumber) { %>
+                <p><strong>Mobile:</strong> <%= entry.mobileNumber %></p>
+              <% } else { %>
+                <p class="no-mobile">No mobile number found</p>
+              <% } %>
             </div>
           </div>
           <div class="device-status <%= statusClass %>">
